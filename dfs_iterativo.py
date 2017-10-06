@@ -1,80 +1,56 @@
 # encoding: utf-8
 """
-Pseudo Código do DFS iterativo
-function IDDFS(root,max_deep,goal)
-    for depth from 0 to ∞
-        found ← DLS(root, depth,goal)
-        if found ≠ null
-            return found
-
-function DLS(node, depth,goal)
-    if depth = 0 and node is a goal
-        return node
-    if depth > 0
-        foreach child of node
-            found ← DLS(child, depth−1)
-            if found ≠ null
-                return found
-    return null
+Busca em Profundidade Iterativa
+Carlos Magno, Lucas Félix, Matheus Reis, Samuel Ribeiro
+IA - Missionarios e Canibais
 """
-from collections import defaultdict
-
-# Estado Inicial
-"""
-(C,M,B)
-(3,3,1)
-Barco
-1 - Esquerda
-0- Direita
-
-Estado Final
-(0,0,0)
-
-"""
-# default dictionary to store graph
-graph = defaultdict(list)
-
-# function to add an edge to graph
-
-caminho = []
+from grafo import espaco_de_busca
 
 
-def addEdge(u, v):
-    graph[u].append(v)
+class aprofundamento():
+    """Aprofundamento Iterativo"""
 
+    def __init__(self):
+        self.espaco = espaco_de_busca()
+        self.espaco.gera_espaco_de_busca()
+        self.caminho = []
 
-def verifica_estado(origem, alvo):
-    for i in range(0, len(origem)):
-        if(origem[i] is not alvo[i]):
-            return False
-    return True
+    def verifica_estado(self, origem, alvo):
+        """Verifica o estado objetivo"""
+        for i in range(0, len(origem)):
+            if(origem[i] is not alvo[i]):
+                return False
+        return True
 
-
-def dfs_iterativo(origem, max_deep, alvo):
-    """Limita a profundidade"""
-    for deep in range(0, max_deep):
-        elemento = dfs(origem, deep, alvo)
-        if elemento is not None:
-            return elemento
-
-
-def dfs(origem, deep, alvo):
-    """Aplica o DFS"""
-    if deep is 0 and verifica_estado(origem, alvo):
-        return origem
-    if deep > 0:
-        for no in graph[origem]:
-            # print no, deep
-            elemento = dfs(no, deep - 1, alvo)
+    def dfs_iterativo(self, origem, max_profundidade, alvo):
+        """Limita a profundidade"""
+        for profundidade in range(0, max_profundidade):
+            elemento = self.dfs(origem, profundidade, alvo)
             if elemento is not None:
                 return elemento
-    return None
 
-addEdge((3, 3, 1), (3, 2, 1))
-addEdge((3, 3, 1), (4, 5, 6))
-addEdge((3, 2, 1), (0, 0, 3))
-addEdge((0, 0, 3), (0, 0, 0))
-# print graph
-print dfs_iterativo((3, 3, 1), 4, (0, 0, 0))
-# print graph[(3, 3, 1)][0]
-# print graph
+    def dfs(self, origem, profundidade, alvo):
+        """Aplica o DFS"""
+        # print origem
+        self.caminho.append(origem)
+        if profundidade is 0 and self.verifica_estado(origem, alvo):
+            return origem
+        if profundidade > 0:
+            for no in self.espaco.grafo[origem]:
+                # print no, deep
+                elemento = self.dfs(no, profundidade - 1, alvo)
+                if elemento is not None:
+                    return elemento
+        return None
+
+    def main(self):
+        elemento = self.dfs_iterativo((3, 3, 1), 12, (0, 0, 0))
+        if(elemento is None):
+            print "Elemento não encontrado."
+        else:
+            print "Elemento encontrado: ", elemento
+            print "Caminho da Pesquisa:"
+            print self.caminho
+if __name__ == '__main__':
+    dsf = aprofundamento()
+    dsf.main()
