@@ -48,6 +48,8 @@ class aprofundamento():
         if(elemento is None):
             print "Elemento não encontrado."
         else:
+            print "Iniciando a Pesquisa..."
+            print "Pesquisa Iniciada do elemento: ", (3, 3, 1)
             print "Elemento encontrado: ", elemento
             print "Caminho da Pesquisa:"
             print self.caminho
