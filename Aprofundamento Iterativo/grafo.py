@@ -1,6 +1,10 @@
 # encoding:utf-8
 from collections import defaultdict
-"""Carlos """
+"""
+Busca em Profundidade Iterativa
+Carlos Magno, Lucas Félix, Matheus Reis, Samuel Ribeiro
+IA - Missionarios e Canibais
+"""
 
 
 class espaco_de_busca():
